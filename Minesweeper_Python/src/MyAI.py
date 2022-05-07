@@ -12,6 +12,7 @@
 #				- DO NOT MAKE CHANGES TO THIS FILE.
 # ==============================CS-199==================================
 
+import random
 from AI import AI
 from Action import Action
 
@@ -23,6 +24,19 @@ class MyAI( AI ):
 		########################################################################
 		#							YOUR CODE BEGINS						   #
 		########################################################################
+		self.__rowDimension = rowDimension
+		self.__colDimension = colDimension
+		self.__coveredTiles = 0
+		self.__totalMines = totalMines
+		self.__currX = startX
+		self.__currY = startY
+		self.__moveCount = 0
+
+		#have a copy of the board to update the board status on our end
+		self.__board = []
+		self.create_board()
+
+
 		pass
 		########################################################################
 		#							YOUR CODE ENDS							   #
@@ -30,11 +44,51 @@ class MyAI( AI ):
 
 		
 	def getAction(self, number: int) -> "Action Object":
-
+		# successful game: UNCOVER #C*#R-#M times then LEAVE
 		########################################################################
 		#							YOUR CODE BEGINS						   #
 		########################################################################
+
+		#if take too many step, 365 for now, make randome move
+		if (self.__moveCount + 1 > 365):
+			action = AI.Action(random.randrange(1, len(AI.Action)))
+			x = random.randrange(self.__colDimension)
+			y = random.randrange(self.__rowDimension)
+			self.__moveCount += 1
+			return Action(action, x, y)
+
+
+		# are we done? #CoveredTiles = #Mines ->LEAVES
+		if (self.__coveredTiles == self.__totalMines):
+			return Action(AI, Action.LEAVE);
+		# otherwise need figure out UNCOVER X,Y
+		""" E.g. if EffectiveLabel(x) = NumUnMarkedNeighbors(x), then 
+		all UnMarkedNeighbors(x) must be mines (mark them as 
+		such on the board; this is likely to reduce effective labels of 
+		other nearby uncovered tiles, so that the rules-of-thumb 
+		can be fired again)
+		• E.g. if EffectiveLabel(x) = 0, then all UnMarkedNeighbors(x) 
+		must be safe (you can UNCOVER them) """
+
+		#simple rule of thumb logic UNCOVER X,Y
+
+		#IF not found use another logic
+
+		#If not found again guess use approximation
+
+
 		return Action(AI.Action.LEAVE)
 		########################################################################
 		#							YOUR CODE ENDS							   #
 		########################################################################
+
+
+	def create_board(self):
+		for i in range(self.__rowDimension):
+			row = []
+			for j in range(self.__colDimension):
+				# set to ??? -1 for now cause Idk what else to put
+				row.append(-1)
+			self.__board.append(row)
+
+
