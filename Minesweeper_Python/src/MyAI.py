@@ -82,7 +82,7 @@ class MyAI( AI ):
 
 		# uncover the tile and set the status 0-8 else flagtheTile
 		if (number >= 0 and number <= 8):
-			self.uncoverTile()
+			self.uncoverTile(number)
 		else:
 			self.flagTile()
 
