@@ -82,7 +82,7 @@ class MyAI( AI ):
 
 		# uncover the tile and set the status 0-8 else flagtheTile
 		if (number >= 0 and number <= 8):
-			self.uncoverTile(number)
+			self.uncoverTile()
 		else:
 			self.flagTile()
 
@@ -173,7 +173,7 @@ class MyAI( AI ):
 			if ((x-1,y) not in self.__Uncovered):
 				self.__toUncover.append((x-1,y))
 
-		if (x+1 <= self.__board):
+		if (x+1 <= len(self.__board)):
 			if (y-1 >= 0 and ((x+1,y-1) not in self.__Uncovered)):
 				self.__toUncover.append((x+1,y-1))
 			if (y+1 <= len(self.__board[x]) and ((x+1,y+1) not in self.__Uncovered)):
@@ -184,7 +184,7 @@ class MyAI( AI ):
 		if (y-1 >= 0 and ((x,y-1) not in self.__Uncovered)):
 			self.__toUncover.append((x,y-1))
 
-		if (y+1 <= self.__board[x] and ((x,y+1) not in self.__Uncovered)):
+		if (y+1 <= len(self.__board[x]) and ((x,y+1) not in self.__Uncovered)):
 			self.__toUncover.append((x,y+1))
 
 
