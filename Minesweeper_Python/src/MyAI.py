@@ -102,6 +102,7 @@ class MyAI( AI ):
 		if (len(self.__toUncover) > 0):
 			action = AI.Action(1) #uncover
 			self.__lastAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
+			self.__toUncover.pop(0)
 			return self.__lastAction
 			
 		#IF not found use another logic
@@ -195,11 +196,11 @@ class MyAI( AI ):
 
 
 	def uncoverTile(self, num: int):
-		if ((self.__currX, self.__currY) in self.__toUncover):
-			self.__board[self.__currX][self.__currY] = num
-			self.__Uncovered.append((self.__currX, self.__currY))
-			self.__coveredTiles -= 1
-			self.__toUncover.pop(0)
+		#if ((self.__currX, self.__currY) in self.__toUncover):
+		self.__board[self.__currX][self.__currY] = num
+		self.__Uncovered.append((self.__currX, self.__currY))
+		self.__coveredTiles -= 1
+			#self.__toUncover.pop(0)
 
 	# use 9 as flag for now
 	def flagTile(self):
