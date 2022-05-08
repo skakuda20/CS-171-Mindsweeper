@@ -118,24 +118,30 @@ class MyAI( AI ):
 		x = self.__currX
 		y = self.__currY
 		
+		# check all 8 adjacent tiles if they are already uncovered; if not add them to toUncover list
+		
+		# little messy if u can double check that ll be nice
+
 		if (x-1 >= 0):
-			if (y-1 >= 0):
+			if (y-1 >= 0 and ((x-1,y-1) not in self.__Uncovered)):
 				self.__toUncover.append((x-1,y-1))
-			if (y+1 <= len(self.__board[x])):
+			if (y+1 <= len(self.__board[x]) and ((x-1,y+1) not in self.__Uncovered)):
 				self.__toUncover.append((x-1,y+1))
-			self.__toUncover.append((x-1,y))
+			if ((x-1,y) not in self.__Uncovered):
+				self.__toUncover.append((x-1,y))
 
 		if (x+1 <= self.__board):
-			if (y-1 >= 0):
+			if (y-1 >= 0 and ((x+1,y-1) not in self.__Uncovered)):
 				self.__toUncover.append((x+1,y-1))
-			if (y+1 <= len(self.__board[x])):
+			if (y+1 <= len(self.__board[x]) and ((x+1,y+1) not in self.__Uncovered)):
 				self.__toUncover.append((x+1,y+1))
-			self.__toUncover.append((x+1,y))
+			if ((x+1,y) not in self.__Uncovered):
+				self.__toUncover.append((x+1,y))
 
-		if (y-1 >= 0):
+		if (y-1 >= 0 and ((x,y-1) not in self.__Uncovered)):
 			self.__toUncover.append((x,y-1))
 
-		if (y+1 <= self.__board[x]):
+		if (y+1 <= self.__board[x] and ((x,y+1) not in self.__Uncovered)):
 			self.__toUncover.append((x,y+1))
 
 
