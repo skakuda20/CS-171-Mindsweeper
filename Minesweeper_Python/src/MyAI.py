@@ -82,9 +82,8 @@ class MyAI( AI ):
 
 		print(self.__currX)
 		print(self.__currY)
-		for row in self.__board:
-			print(row)
-		#print(self.__board)
+		print(self.__board)
+		print(self.__toUncover)
 
 		# uncover the tile and set the status 0-8 else flagtheTile
 		if (number >= 0 and number <= 8):
