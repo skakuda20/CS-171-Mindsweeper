@@ -32,6 +32,8 @@ class MyAI( AI ):
 		self.__currY = startY
 		self.__moveCount = 0
 
+		self.__lastAction = Action(AI.Action.UNCOVER, self.__currX, self.__currY)
+
 		#have a copy of the board to update the board status on our end
 		self.__board = []
 		self.create_board()
@@ -70,6 +72,15 @@ class MyAI( AI ):
 		• E.g. if EffectiveLabel(x) = 0, then all UnMarkedNeighbors(x) 
 		must be safe (you can UNCOVER them) """
 
+		self.__currX = self.__lastAction.getX()
+		self.__currY = self.__lastAction.getY()
+
+		# uncover the tile and set the status 0-8 else flagtheTile
+		if (number >= 0 and number <= 8):
+			self.uncoverTile()
+		else:
+			self.flagTile()
+
 		#simple rule of thumb logic UNCOVER X,Y
 
 		#IF not found use another logic
@@ -81,6 +92,13 @@ class MyAI( AI ):
 		########################################################################
 		#							YOUR CODE ENDS							   #
 		########################################################################
+
+	def uncoverTile(self, num: int):
+		self.board[self.__currX][self.__currY] = num
+
+	# use 9 as flag for now
+	def flagTile(self):
+		self.board[self.__currX][self.__currY] = 9
 
 
 	def create_board(self):
