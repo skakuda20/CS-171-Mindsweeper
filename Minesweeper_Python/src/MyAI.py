@@ -34,6 +34,11 @@ class MyAI( AI ):
 
 		self.__lastAction = Action(AI.Action.UNCOVER, self.__currX, self.__currY)
 
+		# to uncover list
+		self.__toUncover = [(self.__currX, self.__currY)]
+		# tiles that are aleady uncovered
+		self.__Uncovered = []
+
 		#have a copy of the board to update the board status on our end
 		self.__board = []
 		self.create_board()
@@ -82,6 +87,8 @@ class MyAI( AI ):
 			self.flagTile()
 
 		#simple rule of thumb logic UNCOVER X,Y
+		if (number == 0):
+			self.uncoverAdjTiles()
 
 		#IF not found use another logic
 
@@ -93,8 +100,36 @@ class MyAI( AI ):
 		#							YOUR CODE ENDS							   #
 		########################################################################
 
+	def uncoverAdjTiles(self):
+		x = self.__currX
+		y = self.__currY
+		
+		if (x-1 >= 0):
+			if (y-1 >= 0):
+				self.__toUncover.append((x-1,y-1))
+			if (y+1 <= len(self.__board[x])):
+				self.__toUncover.append((x-1,y+1))
+			self.__toUncover.append((x-1,y))
+
+		if (x+1 <= self.__board):
+			if (y-1 >= 0):
+				self.__toUncover.append((x+1,y-1))
+			if (y+1 <= len(self.__board[x])):
+				self.__toUncover.append((x+1,y+1))
+			self.__toUncover.append((x+1,y))
+
+		if (y-1 >= 0):
+			self.__toUncover.append((x,y-1))
+
+		if (y+1 <= self.__board[x]):
+			self.__toUncover.append((x,y+1))
+
+
 	def uncoverTile(self, num: int):
-		self.board[self.__currX][self.__currY] = num
+		if ((self.__currX, self.__currY) in self.__toUncover):
+			self.board[self.__currX][self.__currY] = num
+			self.__Uncovered.append((self.__currX, self.__currY))
+
 
 	# use 9 as flag for now
 	def flagTile(self):
