@@ -120,13 +120,13 @@ class MyAI( AI ):
 		# Check all adjacent tiles:
 
 		# Check tiles in row below if applicable
-		if (self.__currX <= self.__rowDimension - 1):
+		if (self.__currX > 0):
 			# Check bottom left
-			if (self.__currY >= 0):
+			if (self.__currY > 0):
 				if (self.__board[self.__currX - 1][self.__currY - 1] == -1 or self.__board[self.__currX - 1][self.__currY - 1] == 10 ):
 					numUnmrked.append((self.__currX-1, self.__currY-1))
 			# Check bottom right
-			if (self.__currY <= self.__colDimension - 1):
+			if (self.__currY < self.__colDimension - 1):
 				if (self.__board[self.__currX - 1][self.__currY + 1] == -1 or self.__board[self.__currX - 1][self.__currY + 1] == 10):
 					numUnmrked.append((self.__currX-1, self.__currY+1))
 			# Check bottom mid
@@ -134,22 +134,22 @@ class MyAI( AI ):
 				numUnmrked.append((self.__currX-1, self.__currY))
 		
 		# Check mid left
-		if (self.__currY >= 0):
+		if (self.__currY > 0):
 			if (self.__board[self.__currX][self.__currY - 1] == -1 or self.__board[self.__currX][self.__currY - 1] == 10):
-				numUnmrked.append((self.__currX, self.__currY))
+				numUnmrked.append((self.__currX, self.__currY-1))
 		# Check mid right
-		if (self.__currY <= self.__colDimension - 1):
+		if (self.__currY < self.__colDimension - 1):
 			if (self.__board[self.__currX][self.__currY + 1] == -1 or self.__board[self.__currX][self.__currY + 1] == 10):
 				numUnmrked.append((self.__currX, self.__currY+1))
 
 		# Check tiles in row above if applicable
-		if (self.__currX >= 0):
+		if (self.__currX < self.__rowDimension - 1):
 			# Check top left
-			if (self.__currY >= 0):
+			if (self.__currY > 0):
 				if (self.__board[self.__currX + 1][self.__currY - 1] == -1 or self.__board[self.__currX + 1][self.__currY - 1] == 10):
 					numUnmrked.append((self.__currX+1, self.__currY-1))
 			# Check top right
-			if (self.__currY <= self.__colDimension - 1):
+			if (self.__currY < self.__colDimension - 1):
 				if (self.__board[self.__currX + 1][self.__currY + 1] == -1 or self.__board[self.__currX + 1][self.__currY + 1] == 10):
 					numUnmrked.append((self.__currX+1, self.__currY+1))
 			# Checkk top mid
