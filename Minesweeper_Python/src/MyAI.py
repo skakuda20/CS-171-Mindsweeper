@@ -120,13 +120,13 @@ class MyAI( AI ):
 		# Check all adjacent tiles:
 
 		# Check tiles in row below if applicable
-		if (self.__currX < self.__rowDimension - 1):
+		if (self.__currX <= self.__rowDimension - 1):
 			# Check bottom left
-			if (self.__currY > 0):
+			if (self.__currY >= 0):
 				if (self.__board[self.__currX - 1][self.__currY - 1] == -1 or self.__board[self.__currX - 1][self.__currY - 1] == 10 ):
 					numUnmrked.append((self.__currX-1, self.__currY-1))
 			# Check bottom right
-			if (self.__currY < self.__colDimension - 1):
+			if (self.__currY <= self.__colDimension - 1):
 				if (self.__board[self.__currX - 1][self.__currY + 1] == -1 or self.__board[self.__currX - 1][self.__currY + 1] == 10):
 					numUnmrked.append((self.__currX-1, self.__currY+1))
 			# Check bottom mid
@@ -134,22 +134,22 @@ class MyAI( AI ):
 				numUnmrked.append((self.__currX-1, self.__currY))
 		
 		# Check mid left
-		if (self.__currY > 0):
+		if (self.__currY >= 0):
 			if (self.__board[self.__currX][self.__currY - 1] == -1 or self.__board[self.__currX][self.__currY - 1] == 10):
 				numUnmrked.append((self.__currX, self.__currY))
 		# Check mid right
-		if (self.__currY < self.__colDimension - 1):
+		if (self.__currY <= self.__colDimension - 1):
 			if (self.__board[self.__currX][self.__currY + 1] == -1 or self.__board[self.__currX][self.__currY + 1] == 10):
 				numUnmrked.append((self.__currX, self.__currY+1))
 
 		# Check tiles in row above if applicable
-		if (self.__currX > 0):
+		if (self.__currX >= 0):
 			# Check top left
-			if (self.__currY > 0):
+			if (self.__currY >= 0):
 				if (self.__board[self.__currX + 1][self.__currY - 1] == -1 or self.__board[self.__currX + 1][self.__currY - 1] == 10):
 					numUnmrked.append((self.__currX+1, self.__currY-1))
 			# Check top right
-			if (self.__currY < self.__colDimension - 1):
+			if (self.__currY <= self.__colDimension - 1):
 				if (self.__board[self.__currX + 1][self.__currY + 1] == -1 or self.__board[self.__currX + 1][self.__currY + 1] == 10):
 					numUnmrked.append((self.__currX+1, self.__currY+1))
 			# Checkk top mid
@@ -177,7 +177,7 @@ class MyAI( AI ):
 			if ((x-1,y) not in self.__Uncovered):
 				self.__toUncover.append((x-1,y))
 
-		if (x+1 <= len(self.__board)):
+		if (x+1 < len(self.__board)):
 			if (y-1 >= 0 and ((x+1,y-1) not in self.__Uncovered)):
 				self.__toUncover.append((x+1,y-1))
 			if (y+1 <= len(self.__board[x]) and ((x+1,y+1) not in self.__Uncovered)):
@@ -188,7 +188,7 @@ class MyAI( AI ):
 		if (y-1 >= 0 and ((x,y-1) not in self.__Uncovered)):
 			self.__toUncover.append((x,y-1))
 
-		if (y+1 <= len(self.__board[x]) and ((x,y+1) not in self.__Uncovered)):
+		if (y+1 < len(self.__board[x]) and ((x,y+1) not in self.__Uncovered)):
 			self.__toUncover.append((x,y+1))
 
 
