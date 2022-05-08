@@ -172,7 +172,7 @@ class MyAI( AI ):
 		if (x-1 >= 0):
 			if (y-1 >= 0 and ((x-1,y-1) not in self.__Uncovered)):
 				self.__toUncover.append((x-1,y-1))
-			if (y+1 <= len(self.__board[x]) and ((x-1,y+1) not in self.__Uncovered)):
+			if (y+1 < len(self.__board[x]) and ((x-1,y+1) not in self.__Uncovered)):
 				self.__toUncover.append((x-1,y+1))
 			if ((x-1,y) not in self.__Uncovered):
 				self.__toUncover.append((x-1,y))
@@ -180,7 +180,7 @@ class MyAI( AI ):
 		if (x+1 < len(self.__board)):
 			if (y-1 >= 0 and ((x+1,y-1) not in self.__Uncovered)):
 				self.__toUncover.append((x+1,y-1))
-			if (y+1 <= len(self.__board[x]) and ((x+1,y+1) not in self.__Uncovered)):
+			if (y+1 < len(self.__board[x]) and ((x+1,y+1) not in self.__Uncovered)):
 				self.__toUncover.append((x+1,y+1))
 			if ((x+1,y) not in self.__Uncovered):
 				self.__toUncover.append((x+1,y))
