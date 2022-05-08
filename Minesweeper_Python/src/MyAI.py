@@ -26,7 +26,7 @@ class MyAI( AI ):
 		########################################################################
 		self.__rowDimension = rowDimension
 		self.__colDimension = colDimension
-		self.__coveredTiles = 0
+		self.__coveredTiles = rowDimension * colDimension
 		self.__totalMines = totalMines
 		self.__currX = startX
 		self.__currY = startY
@@ -149,6 +149,7 @@ class MyAI( AI ):
 		if ((self.__currX, self.__currY) in self.__toUncover):
 			self.__board[self.__currX][self.__currY] = num
 			self.__Uncovered.append((self.__currX, self.__currY))
+			self.__coveredTiles -= 1
 
 
 	# use 9 as flag for now
