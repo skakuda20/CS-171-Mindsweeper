@@ -111,7 +111,7 @@ class MyAI( AI ):
 	# loop through all adjacent tiles and check how many are unmarked
 	# if it equals to num meaning all unmarked tiles are bomb marked them (10)? whateve represent bomb
 	def checkNumUnMarked(self, num: int):
-		numUnmrked = 0
+		numUnmrked = []
 
 		# Check all adjacent tiles:
 
@@ -119,40 +119,42 @@ class MyAI( AI ):
 		if (self.__currX < self.__rowDimension - 1):
 			# Check bottom left
 			if (self.__currY > 0):
-				if (self.__board[self.__currX - 1][self.__currY - 1] == -1):
-					numUnmrked += 1
+				if (self.__board[self.__currX - 1][self.__currY - 1] == -1 or self.__board[self.__currX - 1][self.__currY - 1] == 10 ):
+					numUnmrked.append((self.__currX-1, self.__currY-1))
 			# Check bottom right
 			if (self.__currY < self.__colDimension - 1):
-				if (self.__board[self.__currX - 1][self.__currY + 1] == -1):
-					numUnmrked += 1
+				if (self.__board[self.__currX - 1][self.__currY + 1] == -1 or self.__board[self.__currX - 1][self.__currY + 1] == 10):
+					numUnmrked.append((self.__currX-1, self.__currY+1))
 			# Check bottom mid
-			if (self.__board[self.__currX - 1][self.__currY] == -1):
-				numUnmrked += 1
+			if (self.__board[self.__currX - 1][self.__currY] == -1 or self.__board[self.__currX - 1][self.__currY] == 10) :
+				numUnmrked.append((self.__currX-1, self.__currY))
 		
 		# Check mid left
 		if (self.__currY > 0):
-			if (self._board[self.__currX][self.__currY - 1] == -1):
-				numUnmrked += 1
+			if (self.__board[self.__currX][self.__currY - 1] == -1 or self.__board[self.__currX][self.__currY - 1] == 10):
+				numUnmrked.append((self.__currX, self.__currY))
 		# Check mid right
 		if (self.__currY < self.__colDimension - 1):
-			if (self._board[self.__currX][self.__currY + 1] == -1):
-				numUnmrked += 1
+			if (self.__board[self.__currX][self.__currY + 1] == -1 or self.__board[self.__currX][self.__currY + 1] == 10):
+				numUnmrked.append((self.__currX, self.__currY+1))
 
 		# Check tiles in row above if applicable
 		if (self.__currX > 0):
 			# Check top left
 			if (self.__currY > 0):
-				if (self.__board[self.__currX + 1][self.__currY - 1] == -1):
-					numUnmrked += 1
+				if (self.__board[self.__currX + 1][self.__currY - 1] == -1 or self.__board[self.__currX + 1][self.__currY - 1] == 10):
+					numUnmrked.append((self.__currX+1, self.__currY-1))
 			# Check top right
 			if (self.__currY < self.__colDimension - 1):
-				if (self.__board[self.__currX + 1][self.__currY + 1] == -1):
-					numUnmrked += 1
+				if (self.__board[self.__currX + 1][self.__currY + 1] == -1 or self.__board[self.__currX + 1][self.__currY + 1] == 10):
+					numUnmrked.append((self.__currX+1, self.__currY+1))
 			# Checkk top mid
-			if (self.__board[self.__currX + 1][self.__currY] == -1):
-				numUnmrked += 1
+			if (self.__board[self.__currX + 1][self.__currY] == -1 or self.__board[self.__currX + 1][self.__currY + 1] == 10):
+				numUnmrked.append((self.__currX+1, self.__currY))
 		
-		return numUnmrked == num
+		if (len(numUnmrked) == num):
+			for i in numUnmrked:
+				self.__board[i[0]][i[1]] = 10
 
 
 	def uncoverAdjTiles(self):
