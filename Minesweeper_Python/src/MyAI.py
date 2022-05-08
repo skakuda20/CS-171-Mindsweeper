@@ -111,7 +111,48 @@ class MyAI( AI ):
 	# loop through all adjacent tiles and check how many are unmarked
 	# if it equals to num meaning all unmarked tiles are bomb marked them (10)? whateve represent bomb
 	def checkNumUnMarked(self, num: int):
-		return
+		numUnmrked = 0
+
+		# Check all adjacent tiles:
+
+		# Check tiles in row below if applicable
+		if (x < self.__rowDimension - 1):
+			# Check bottom left
+			if (y > 0):
+				if (self.__board[self.__currX - 1][self.__currY - 1] == -1):
+					numUnmrked += 1
+			# Check bottom right
+			if (y < self.__colDimension - 1):
+				if (self.__board[self.__currX - 1][self.__currY + 1] == -1):
+					numUnmrked += 1
+			# Check bottom mid
+			if (self.__board[self.__currX - 1][self.__currY] == -1):
+				numUnmrked += 1
+		
+		# Check mid left
+		if (y > 0):
+			if (self._board[self.__currX][self.__currY - 1] == -1):
+				numUnmrked += 1
+		# Check mid right
+		if (y < self.__colDimension - 1):
+			if (self._board[self.__currX][self.__currY + 1] == -1):
+				numUnmrked += 1
+
+		# Check tiles in row above if applicable
+		if (x > 0):
+			# Check top left
+			if (y > 0):
+				if (self.__board[self.__currX + 1][self.__currY - 1] == -1):
+					numUnmrked += 1
+			# Check top right
+			if (y < self.__colDimension - 1):
+				if (self.__board[self.__currX + 1][self.__currY + 1] == -1):
+					numUnmrked += 1
+			# Checkk top mid
+			if (self.__board[self.__currX + 1][self.__currY] == -1):
+				numUnmrked += 1
+		
+		return numUnmrked == num
 
 
 	def uncoverAdjTiles(self):
@@ -150,7 +191,7 @@ class MyAI( AI ):
 			self.__board[self.__currX][self.__currY] = num
 			self.__Uncovered.append((self.__currX, self.__currY))
 			self.__coveredTiles -= 1
-                        self.__toUncover.pop(0)
+			self.__toUncover.pop(0)
 
 	# use 9 as flag for now
 	def flagTile(self):
