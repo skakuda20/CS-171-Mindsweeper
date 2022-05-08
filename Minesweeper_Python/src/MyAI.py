@@ -89,7 +89,15 @@ class MyAI( AI ):
 		#simple rule of thumb logic UNCOVER X,Y
 		if (number == 0):
 			self.uncoverAdjTiles()
+		else:
+			self.checkNumUnMarked(number)
 
+		# if toUncover list not empty, get the first available one and uncover it
+		if (len(self.__toUncover) > 0):
+			action = AI.Action(1) #uncover
+			self.__lastAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
+			return self.__lastAction
+			
 		#IF not found use another logic
 
 		#If not found again guess use approximation
@@ -99,6 +107,12 @@ class MyAI( AI ):
 		########################################################################
 		#							YOUR CODE ENDS							   #
 		########################################################################
+
+	# loop through all adjacent tiles and check how many are unmarked
+	# if it equals to num meaning all unmarked tiles are bomb marked them (10)? whateve represent bomb
+	def checkNumUnMarked(self, num: int):
+		return
+
 
 	def uncoverAdjTiles(self):
 		x = self.__currX
@@ -127,13 +141,13 @@ class MyAI( AI ):
 
 	def uncoverTile(self, num: int):
 		if ((self.__currX, self.__currY) in self.__toUncover):
-			self.board[self.__currX][self.__currY] = num
+			self.__board[self.__currX][self.__currY] = num
 			self.__Uncovered.append((self.__currX, self.__currY))
 
 
 	# use 9 as flag for now
 	def flagTile(self):
-		self.board[self.__currX][self.__currY] = 9
+		self.__board[self.__currX][self.__currY] = 9
 
 
 	def create_board(self):
