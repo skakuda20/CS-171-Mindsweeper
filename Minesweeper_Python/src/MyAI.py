@@ -116,13 +116,13 @@ class MyAI( AI ):
 		# Check all adjacent tiles:
 
 		# Check tiles in row below if applicable
-		if (x < self.__rowDimension - 1):
+		if (self.__currX < self.__rowDimension - 1):
 			# Check bottom left
-			if (y > 0):
+			if (self.__currY > 0):
 				if (self.__board[self.__currX - 1][self.__currY - 1] == -1):
 					numUnmrked += 1
 			# Check bottom right
-			if (y < self.__colDimension - 1):
+			if (self.__currY < self.__colDimension - 1):
 				if (self.__board[self.__currX - 1][self.__currY + 1] == -1):
 					numUnmrked += 1
 			# Check bottom mid
@@ -130,22 +130,22 @@ class MyAI( AI ):
 				numUnmrked += 1
 		
 		# Check mid left
-		if (y > 0):
+		if (self.__currY > 0):
 			if (self._board[self.__currX][self.__currY - 1] == -1):
 				numUnmrked += 1
 		# Check mid right
-		if (y < self.__colDimension - 1):
+		if (self.__currY < self.__colDimension - 1):
 			if (self._board[self.__currX][self.__currY + 1] == -1):
 				numUnmrked += 1
 
 		# Check tiles in row above if applicable
-		if (x > 0):
+		if (self.__currX > 0):
 			# Check top left
-			if (y > 0):
+			if (self.__currY > 0):
 				if (self.__board[self.__currX + 1][self.__currY - 1] == -1):
 					numUnmrked += 1
 			# Check top right
-			if (y < self.__colDimension - 1):
+			if (self.__currY < self.__colDimension - 1):
 				if (self.__board[self.__currX + 1][self.__currY + 1] == -1):
 					numUnmrked += 1
 			# Checkk top mid
