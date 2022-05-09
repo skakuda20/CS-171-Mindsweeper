@@ -74,12 +74,7 @@ class MyAI( AI ):
 				self.__bomblist.pop(0)
 				return lastAction
 			print("COVERED TILES: " + self.__coveredTiles)
-			checkWhileNoneLeft()
-			if (len(self.__toUncover) == 0):
-				return Action(AI.Action.LEAVE)
-			else:
-				newAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
-				return newAction
+			
 		# otherwise need figure out UNCOVER X,Y
 		""" E.g. if EffectiveLabel(x) = NumUnMarkedNeighbors(x), then 
 		all UnMarkedNeighbors(x) must be mines (mark them as 
@@ -118,7 +113,12 @@ class MyAI( AI ):
 		#IF not found use another logic
 
 		#If not found again guess use approximation
-
+		checkWhileNoneLeft()
+		if (len(self.__toUncover) == 0):
+			return Action(AI.Action.LEAVE)
+		else:
+			newAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
+			return newAction
 
 		
 		########################################################################
