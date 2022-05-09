@@ -73,8 +73,18 @@ class MyAI( AI ):
 				lastAction = Action(action, self.__bomblist[0][0], self.__bomblist[0][1])
 				self.__bomblist.pop(0)
 				return lastAction
-			print("COVERED TILES: " + self.__coveredTiles)
-			
+			#print("COVERED TILES: " + self.__coveredTiles)
+
+			# TEMP
+			checkWhileNoneLeft()
+			if (len(self.__toUncover) == 0):
+				return Action(AI.Action.LEAVE)
+			else:
+				newAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
+				return newAction
+			# END TEMP
+
+
 		# otherwise need figure out UNCOVER X,Y
 		""" E.g. if EffectiveLabel(x) = NumUnMarkedNeighbors(x), then 
 		all UnMarkedNeighbors(x) must be mines (mark them as 
@@ -87,9 +97,9 @@ class MyAI( AI ):
 		self.__currX = self.__lastAction.getX()
 		self.__currY = self.__lastAction.getY()
 
-		print(self.__currX)
-		print(self.__currY)
-		print(self.__board)
+		#print(self.__currX)
+		#print(self.__currY)
+		#print(self.__board)
 
 		# uncover the tile and set the status 0-8 else flagtheTile
 		if (number >= 0 and number <= 8):
@@ -113,13 +123,15 @@ class MyAI( AI ):
 		#IF not found use another logic
 
 		#If not found again guess use approximation
+
+		'''
 		checkWhileNoneLeft()
 		if (len(self.__toUncover) == 0):
 			return Action(AI.Action.LEAVE)
 		else:
 			newAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
 			return newAction
-
+		'''
 		
 		########################################################################
 		#							YOUR CODE ENDS							   #
