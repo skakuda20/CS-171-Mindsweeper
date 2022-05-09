@@ -120,7 +120,7 @@ class MyAI( AI ):
 		#If not found again guess use approximation
 
 
-		return Action(AI.Action.LEAVE)
+		
 		########################################################################
 		#							YOUR CODE ENDS							   #
 		########################################################################
