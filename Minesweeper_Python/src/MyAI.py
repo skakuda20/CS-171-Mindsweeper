@@ -111,15 +111,15 @@ class MyAI( AI ):
 			action = AI.Action(1) #uncover
 			self.__lastAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
 			self.__toUncover.pop(0)
+			for row in self.__board:
+				print(row)
 			return self.__lastAction
 			
 		#IF not found use another logic
 
 		#If not found again guess use approximation
 
-		for row in self.__board:
-			print(row)
-		return Action(AI.Action.LEAVE)
+		
 		########################################################################
 		#							YOUR CODE ENDS							   #
 		########################################################################
