@@ -105,6 +105,7 @@ class MyAI( AI ):
 			self.uncoverAdjTiles()
 		else:
 			self.checkNumUnMarked(self.__currX, self.__currY, number)
+			self.checkAdjTiles(self.__currX, self.__currY)
 
 		# if toUncover list not empty, get the first available one and uncover it
 		if (len(self.__toUncover) > 0):
@@ -213,7 +214,7 @@ class MyAI( AI ):
 		self.__coveredTiles -= 1
 			#self.__toUncover.pop(0)
 
-		self.checkAdjTiles(self.__currX, self.__currY)
+		
 
 
 	def checkAdjTiles(self, x, y):
