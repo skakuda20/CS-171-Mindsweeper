@@ -162,7 +162,7 @@ class MyAI( AI ):
 				self.__checkUpdatedBomb(i[0], i[1])
 
 
-	def checkUpdatedBomb(x, y):
+	def checkUpdatedBomb(self, x, y):
 		# When a bomb is flagged, check each adjacent tile if the new info reveals safe tiles
 		uncoveredAdjacent = []
 		
