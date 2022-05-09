@@ -95,6 +95,7 @@ class MyAI( AI ):
 			self.uncoverAdjTiles()
 		else:
 			self.checkNumUnMarked(number)
+			self.checkAdjTiles(self.__currX, self.__currY)
 
 		# if toUncover list not empty, get the first available one and uncover it
 		if (len(self.__toUncover) > 0):
