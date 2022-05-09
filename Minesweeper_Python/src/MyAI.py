@@ -261,7 +261,7 @@ class MyAI( AI ):
 				# Chcek mid right
 				if (y < self.__colDimension - 1):
 					if self.__board[tile[0]][tile[1] - 1] == -1:
-						self.__toUncover.append((tile[0], tile[1] - 1))
+						self.__toUncover.append((tile[0], tile[1] + 1))
 				# Check bottom row
 				if (tile[0] < self.__rowDimension - 1):
 					if (tile[1] > 0):
