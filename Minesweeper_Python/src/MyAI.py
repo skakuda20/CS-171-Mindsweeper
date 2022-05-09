@@ -1,3 +1,32 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@TimothyLin0413 
+skakuda20
+/
+CS-171-Mindsweeper
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+CS-171-Mindsweeper/Minesweeper_Python/src/MyAI.py /
+@TimothyLin0413
+TimothyLin0413 Update MyAI.py
+Latest commit ba625e4 24 minutes ago
+ History
+ 2 contributors
+@TimothyLin0413@skakuda20
+369 lines (313 sloc)  12.3 KB
+   
 # ==============================CS-199==================================
 # FILE:			MyAI.py
 #
@@ -73,20 +102,7 @@ class MyAI( AI ):
 				lastAction = Action(action, self.__bomblist[0][0], self.__bomblist[0][1])
 				self.__bomblist.pop(0)
 				return lastAction
-			#print("COVERED TILES: " + self.__coveredTiles)
-			
-			'''
-			# TEMP
-			checkWhileNoneLeft()
-			if (len(self.__toUncover) == 0):
-				return Action(AI.Action.LEAVE)
-			else:
-				newAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
-				return newAction
-			# END TEMP
-			'''
-
-
+			return Action(AI.Action.LEAVE)
 		# otherwise need figure out UNCOVER X,Y
 		""" E.g. if EffectiveLabel(x) = NumUnMarkedNeighbors(x), then 
 		all UnMarkedNeighbors(x) must be mines (mark them as 
@@ -99,9 +115,9 @@ class MyAI( AI ):
 		self.__currX = self.__lastAction.getX()
 		self.__currY = self.__lastAction.getY()
 
-		#print(self.__currX)
-		#print(self.__currY)
-		#print(self.__board)
+		print(self.__currX)
+		print(self.__currY)
+		print(self.__board)
 
 		# uncover the tile and set the status 0-8 else flagtheTile
 		if (number >= 0 and number <= 8):
@@ -126,15 +142,8 @@ class MyAI( AI ):
 
 		#If not found again guess use approximation
 
-		'''
-		checkWhileNoneLeft()
-		if (len(self.__toUncover) == 0):
-			return Action(AI.Action.LEAVE)
-		else:
-			newAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
-			return newAction
-		'''
-		
+
+		return Action(AI.Action.LEAVE)
 		########################################################################
 		#							YOUR CODE ENDS							   #
 		########################################################################
@@ -386,12 +395,3 @@ class MyAI( AI ):
 				if self.__board[i][j] == 9 or self.__board[i][j] == 10:
 					self.__bomblist.append((i,j))
 					
-	'''
-	def checkWhileNoneLeft():
-		for i in range(self.__rowDimension):
-			for j in range(self.__colDimension):
-				if self.__board[i][j] == 10:
-					checkUpdatedBomb()
-				elif 0 <= self.__board[i][j] <= 8:
-					checkAdjTiles(i, j)
-	'''
