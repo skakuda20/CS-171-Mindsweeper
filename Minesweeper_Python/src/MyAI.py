@@ -74,7 +74,8 @@ class MyAI( AI ):
 				self.__bomblist.pop(0)
 				return lastAction
 			#print("COVERED TILES: " + self.__coveredTiles)
-
+			
+			'''
 			# TEMP
 			checkWhileNoneLeft()
 			if (len(self.__toUncover) == 0):
@@ -83,6 +84,7 @@ class MyAI( AI ):
 				newAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
 				return newAction
 			# END TEMP
+			'''
 
 
 		# otherwise need figure out UNCOVER X,Y
@@ -384,7 +386,7 @@ class MyAI( AI ):
 				if self.__board[i][j] == 9 or self.__board[i][j] == 10:
 					self.__bomblist.append((i,j))
 					
-
+	'''
 	def checkWhileNoneLeft():
 		for i in range(self.__rowDimension):
 			for j in range(self.__colDimension):
@@ -392,3 +394,4 @@ class MyAI( AI ):
 					checkUpdatedBomb()
 				elif 0 <= self.__board[i][j] <= 8:
 					checkAdjTiles(i, j)
+	'''
