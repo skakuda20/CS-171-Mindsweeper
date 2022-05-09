@@ -230,7 +230,7 @@ class MyAI( AI ):
 			# Check bottom row
 			if (tile[0] < self.__rowDimension - 1):
 				if (tile[1] > 0):
-					if self.__board[tile[0] - 1][tile[1] - 1] == 10:
+					if self.__board[tile[0] + 1][tile[1] - 1] == 10:
 						numBombs += 1
 				# Check bottom right
 				if (tile[1] < self.__colDimension - 1):
