@@ -38,7 +38,7 @@ class MyAI( AI ):
 		self.__toUncover = [(self.__currX, self.__currY)]
 		# tiles that are aleady uncovered
 		self.__Uncovered = []
-
+		self.__bomblist = []
 		#have a copy of the board to update the board status on our end
 		self.__board = []
 		self.create_board()
