@@ -117,7 +117,8 @@ class MyAI( AI ):
 
 		#If not found again guess use approximation
 
-
+		for row in self.__board:
+			print(row)
 		return Action(AI.Action.LEAVE)
 		########################################################################
 		#							YOUR CODE ENDS							   #
