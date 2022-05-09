@@ -333,11 +333,11 @@ class MyAI( AI ):
 			self.checkNumUnMarked(x, y+1, self.__board[x][y+1])
 
 	def uncoverTile(self, num: int):
-		if ((self.__currX, self.__currY) in self.__toUncover):
-			self.__board[self.__currX][self.__currY] = num
-			self.__Uncovered.append((self.__currX, self.__currY))
-			self.__coveredTiles -= 1
-			self.__toUncover.pop(0)
+		#if ((self.__currX, self.__currY) in self.__toUncover):
+		self.__board[self.__currX][self.__currY] = num
+		self.__Uncovered.append((self.__currX, self.__currY))
+		self.__coveredTiles -= 1
+			#self.__toUncover.pop(0)
 
 	# use 9 as flag for now
 	def flagTile(self):
