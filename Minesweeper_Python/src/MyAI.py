@@ -90,7 +90,7 @@ class MyAI( AI ):
 		if (number >= 0 and number <= 8):
 			self.uncoverTile(number)
 		else:
-			self.flagTile(self.__currX, self.__currY)
+			self.flagTile()
 
 		#simple rule of thumb logic UNCOVER X,Y
 		if (number == 0):
@@ -162,7 +162,6 @@ class MyAI( AI ):
 		if (len(numUnmrked) == num):
 			for i in numUnmrked:
 				self.__board[i[0]][i[1]] = 10
-				self.flagTile((i[0], i[1]))
 
 
 
@@ -205,11 +204,11 @@ class MyAI( AI ):
 		self.__coveredTiles -= 1
 			#self.__toUncover.pop(0)
 
-		
+			
 
 	# use 9 as flag for now
-	def flagTile(self, x, y):
-		self.__board[x][y] = 9
+	def flagTile(self):
+		self.__board[self.__currX][self.__currY] = 9
 
 
 	def create_board(self):
