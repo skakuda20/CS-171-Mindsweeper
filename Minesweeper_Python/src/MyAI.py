@@ -94,7 +94,7 @@ class MyAI( AI ):
 		if (number == 0):
 			self.uncoverAdjTiles()
 		else:
-			self.checkNumUnMarked(number)
+			self.checkNumUnMarked(self.__currX, self.__currY, number)
 			self.checkAdjTiles(self.__currX, self.__currY)
 
 		if (len(self.__toUncover) > 0):
