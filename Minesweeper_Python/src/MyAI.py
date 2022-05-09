@@ -1,32 +1,4 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@TimothyLin0413 
-skakuda20
-/
-CS-171-Mindsweeper
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-CS-171-Mindsweeper/Minesweeper_Python/src/MyAI.py /
-@TimothyLin0413
-TimothyLin0413 Update MyAI.py
-Latest commit ba625e4 24 minutes ago
- History
- 2 contributors
-@TimothyLin0413@skakuda20
-369 lines (313 sloc)  12.3 KB
-   
+
 # ==============================CS-199==================================
 # FILE:			MyAI.py
 #
