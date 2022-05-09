@@ -307,6 +307,30 @@ class MyAI( AI ):
 		if (y+1 <= len(self.__board[x]) and ((x,y+1) not in self.__Uncovered)):
 			self.__toUncover.append((x,y+1))
 
+			
+	def checkAdjTiles(self, x, y):
+		# check adjacent tiles and see there's number then call checkNumunMrked()
+		if (x-1 >= 0):
+			if (y-1 >= 0 and 0 < self.__board[x-1][y-1] <= 8):
+				self.checkNumUnMarked(x-1, y-1, self.__board[x-1][y-1])
+			if (y+1 < len(self.__board[x]) and 0 < self.__board[x-1][y+1] <= 8):
+				self.checkNumUnMarked(x-1, y+1, self.__board[x-1][y+1])
+			if (0 < self.__board[x-1][y] <= 8):
+				self.checkNumUnMarked(x-1, y, self.__board[x-1][y])
+
+		if (x+1 < len(self.__board)):
+			if (y-1 >= 0 and 0 < self.__board[x+1][y-1] <= 8):
+				self.checkNumUnMarked(x+1, y-1, self.__board[x+1][y-1])
+			if (y+1 < len(self.__board[x]) and 0 < self.__board[x+1][y+1] <= 8):
+				self.checkNumUnMarked(x+1, y+1, self.__board[x+1][y+1])
+			if (0 < self.__board[x+1][y] <= 8):
+				self.checkNumUnMarked(x+1, y, self.__board[x+1][y])
+
+		if (y-1 >= 0 and 0 < self.__board[x][y-1] <= 8):
+			self.checkNumUnMarked(x, y-1, self.__board[x][y-1])
+
+		if (y+1 < len(self.__board[x]) and 0 < self.__board[x][y+1] <= 8):
+			self.checkNumUnMarked(x, y+1, self.__board[x][y+1])
 
 	def uncoverTile(self, num: int):
 		if ((self.__currX, self.__currY) in self.__toUncover):
