@@ -245,34 +245,34 @@ class MyAI( AI ):
 				if (tile[0] > 0):
 					# Check top left
 					if (y > 0):
-						if self.__board[tile[0] - 1][tile[1] - 1] == 0:
+						if self.__board[tile[0] - 1][tile[1] - 1] == -1:
 							self.__toUncover.append((tile[0] - 1, tile[1] - 1))
 					# Check top right
 					if (y < self.__colDimension - 1):
-						if self.__board[tile[0] - 1][tile[1] + 1] == 0:
+						if self.__board[tile[0] - 1][tile[1] + 1] == -1:
 							self.__toUncover.append((tile[0] - 1, tile[1] + 1))
 					# Check top mid
-					if self.__board[tile[0] - 1][tile[1]] == 0:
+					if self.__board[tile[0] - 1][tile[1]] == -1:
 						self.__toUncover.append((tile[0] - 1, tile[1]))
 				# Check mid left
 				if (tile[1] > 0):
-					if self.__board[tile[0]][tile[1] - 1] == 0:
+					if self.__board[tile[0]][tile[1] - 1] == -1:
 						self.__toUncover.append((tile[0], tile[1] - 1))
 				# Chcek mid right
 				if (y < self.__colDimension - 1):
-					if self.__board[tile[0]][tile[1] - 1] == 0:
+					if self.__board[tile[0]][tile[1] - 1] == -1:
 						self.__toUncover.append((tile[0], tile[1] - 1))
 				# Check bottom row
 				if (tile[0] < self.__rowDimension - 1):
 					if (tile[1] > 0):
-						if self.__board[tile[0] + 1][tile[1] - 1] == 0:
+						if self.__board[tile[0] + 1][tile[1] - 1] == -1:
 							self.__toUncover.append((tile[0] + 1, tile[1] - 1))
 					# Check bottom right
 					if (tile[1] < self.__colDimension - 1):
-						if self.__board[tile[0] + 1][tile[1] + 1] == 0:
+						if self.__board[tile[0] + 1][tile[1] + 1] == -1:
 							self.__toUncover.append((tile[0] + 1, tile[1] + 1))
 					# Check bottom mid
-					if self.__board[tile[0] + 1][tile[1]] == 0:
+					if self.__board[tile[0] + 1][tile[1]] == -1:
 						self.__toUncover.append((tile[0] + 1, tile[1]))
 
 
