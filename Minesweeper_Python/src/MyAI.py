@@ -237,7 +237,7 @@ class MyAI( AI ):
 			self.checkNumUnMarked((x, y-1))
 
 		if (y+1 < len(self.__board[x]) and 0 < self.__board[x][y+1] <= 8):
-			self.checkNumUnMarked((x, y+1))
+			self.checkNumUnMarked(x, y+1, self.__board[x][y])
 
 	# use 9 as flag for now
 	def flagTile(self):
