@@ -112,8 +112,6 @@ class MyAI( AI ):
 			action = AI.Action(1) #uncover
 			self.__lastAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
 			self.__toUncover.pop(0)
-			for row in self.__board:
-				print(row)
 			return self.__lastAction
 			
 		#IF not found use another logic
@@ -186,25 +184,25 @@ class MyAI( AI ):
 
 		if (x-1 >= 0):
 			if (y-1 >= 0 and ((x-1,y-1) not in self.__Uncovered)):
-				self.__toUncover.append((x-1,y-1))
+				self.__toUncover.insert(0, (x-1,y-1))
 			if (y+1 < len(self.__board[x]) and ((x-1,y+1) not in self.__Uncovered)):
-				self.__toUncover.append((x-1,y+1))
+				self.__toUncover.insert(0,(x-1,y+1))
 			if ((x-1,y) not in self.__Uncovered):
-				self.__toUncover.append((x-1,y))
+				self.__toUncover.insert(0, (x-1,y))
 
 		if (x+1 < len(self.__board)):
 			if (y-1 >= 0 and ((x+1,y-1) not in self.__Uncovered)):
-				self.__toUncover.append((x+1,y-1))
+				self.__toUncover.insert(0, (x+1,y-1))
 			if (y+1 < len(self.__board[x]) and ((x+1,y+1) not in self.__Uncovered)):
-				self.__toUncover.append((x+1,y+1))
+				self.__toUncover.insert(0, (x+1,y+1))
 			if ((x+1,y) not in self.__Uncovered):
-				self.__toUncover.append((x+1,y))
+				self.__toUncover.insert(0, (x+1,y))
 
 		if (y-1 >= 0 and ((x,y-1) not in self.__Uncovered)):
-			self.__toUncover.append((x,y-1))
+			self.__toUncover.insert(0, (x,y-1))
 
 		if (y+1 < len(self.__board[x]) and ((x,y+1) not in self.__Uncovered)):
-			self.__toUncover.append((x,y+1))
+			self.__toUncover.insert(0, (x,y+1))
 
 
 	def uncoverTile(self, num: int):
