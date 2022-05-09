@@ -159,7 +159,7 @@ class MyAI( AI ):
 		if (len(numUnmrked) == num):
 			for i in numUnmrked:
 				self.__board[i[0]][i[1]] = 10
-				self.__checkUpdatedBomb(i[0], i[1])
+				self.checkUpdatedBomb(i[0], i[1])
 
 
 	def checkUpdatedBomb(self, x, y):
