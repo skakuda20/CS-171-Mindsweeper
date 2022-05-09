@@ -38,7 +38,7 @@ class MyAI( AI ):
 		self.__toUncover = [(self.__currX, self.__currY)]
 		# tiles that are aleady uncovered
 		self.__Uncovered = []
-
+		self.__bomblist = []
 		#have a copy of the board to update the board status on our end
 		self.__board = []
 		self.create_board()
@@ -67,6 +67,12 @@ class MyAI( AI ):
 
 		# are we done? #CoveredTiles = #Mines ->LEAVES
 		if (self.__coveredTiles == self.__totalMines):
+			self.flagBombs()
+			while (len(self.__bomblist) > 0):
+				action = AI.Action(2) #flag
+				lastAction = Action(action, self.__bomblist[0][0], self.__bomblist[0][1])
+				self.__bomblist.pop(0)
+				return lastAction
 			return Action(AI.Action.LEAVE)
 		# otherwise need figure out UNCOVER X,Y
 		""" E.g. if EffectiveLabel(x) = NumUnMarkedNeighbors(x), then 
