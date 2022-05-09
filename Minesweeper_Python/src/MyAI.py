@@ -348,7 +348,8 @@ class MyAI( AI ):
 		#if ((self.__currX, self.__currY) in self.__toUncover):
 		self.__board[self.__currX][self.__currY] = num
 		self.__Uncovered.append((self.__currX, self.__currY))
-		self.__coveredTiles -= 1
+		if ((self.__currX, self.__currY) not in self.__Uncovered):
+			self.__coveredTiles -= 1
 			#self.__toUncover.pop(0)
 
 	# use 9 as flag for now
