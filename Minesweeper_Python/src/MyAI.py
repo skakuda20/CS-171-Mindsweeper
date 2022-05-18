@@ -1,3 +1,4 @@
+# COPY OF MyAI.py SUBMITTED AS MINIMAL AI
 
 # ==============================CS-199==================================
 # FILE:			MyAI.py
@@ -43,9 +44,7 @@ class MyAI( AI ):
 		#have a copy of the board to update the board status on our end
 		self.__board = []
 		self.create_board()
-
-
-		pass
+		
 		########################################################################
 		#							YOUR CODE ENDS							   #
 		########################################################################
@@ -56,6 +55,8 @@ class MyAI( AI ):
 		########################################################################
 		#							YOUR CODE BEGINS						   #
 		########################################################################
+		
+		self.printBoard()
 
 		#if take too many step, 365 for now, make randome move
 		if (self.__moveCount + 1 > 365):
@@ -68,7 +69,7 @@ class MyAI( AI ):
 
 		# are we done? #CoveredTiles = #Mines ->LEAVES
 		if (self.__coveredTiles == self.__totalMines):
-			self.flagBombs()
+			#self.flagBombs()
 			while (len(self.__bomblist) > 0):
 				action = AI.Action(2) #flag
 				lastAction = Action(action, self.__bomblist[0][0], self.__bomblist[0][1])
@@ -87,11 +88,12 @@ class MyAI( AI ):
 		self.__currX = self.__lastAction.getX()
 		self.__currY = self.__lastAction.getY()
 
-		print(self.__currX)
-		print(self.__currY)
-		print(self.__board)
+		print ("Len of bomList:", len(self.__bomblist))		# DELETE AFTER
+		print("Len of self.__toUncover before: ", len(self.__toUncover))	# DELETE AFTER
+		
 
 		# uncover the tile and set the status 0-8 else flagtheTile
+			# When would it return a value that isn't 0-8?
 		if (number >= 0 and number <= 8):
 			self.uncoverTile(number)
 		else:
@@ -104,13 +106,33 @@ class MyAI( AI ):
 			self.checkNumUnMarked(self.__currX, self.__currY, number)
 			self.checkAdjTiles(self.__currX, self.__currY)
 
+		print("Len of self.__toUncover after: ", len(self.__toUncover))		# DELETE AFTER
+		
 		if (len(self.__toUncover) > 0):
 			action = AI.Action(1) #uncover
 			self.__lastAction = Action(action, self.__toUncover[0][0], self.__toUncover[0][1])
+			print("Move to make: ", self.__toUncover[0][0], self.__toUncover[0][1])	# DELETE AFTER
 			self.__toUncover.pop(0)
 			return self.__lastAction
-			
+		else:
+			# IF no certain moves left, randomly pick and uncovered tile not adjacent to any edges(techncially higher prob of being safe than adj tiles)
+			print("RAN OUT OF MOVES SO NOW RANDOM")
+			found = 0
+			while (found == 0):
+				rand_x = random.randint(0, self.__rowDimension)
+				rand_y = random.randint(0, self.__colDimension)
+				if ((rand_x, rand_y) not in self.__Uncovered and (rand_x, rand_y) not in self.__bomblist):
+					# Change to not be adjacent to an uncovered edge
+					found = 1
+			action = AI.Action(1) #uncover
+			self.__lastAction = Action(action, rand_x, rand_y)
+			self.__currX = rand_x
+			self.__currY = rand_y
+			print("Move to make (random): ", rand_x, rand_y) 	# DELETE AFTER
+			return self.__lastAction
+
 		#IF not found use another logic
+		
 
 		#If not found again guess use approximation
 
@@ -128,11 +150,11 @@ class MyAI( AI ):
 		# Check all adjacent tiles:
 
 		# Check tiles in row below if applicable
-		if (x> 0):
+		if (x > 0):
 			# Check bottom left
 			if (y > 0):
-				if (self.__board[x - 1][y - 1] == -1 or self.__board[x - 1][y - 1] == 10 ):
-					numUnmrked.append((x-1, y))
+				if (self.__board[x - 1][y - 1] == -1 or self.__board[x - 1][y - 1] == 10):
+					numUnmrked.append((x-1, y-1))
 			# Check bottom right
 			if (y < self.__colDimension - 1):
 				if (self.__board[x - 1][y + 1] == -1 or self.__board[x - 1][y + 1] == 10):
@@ -167,6 +189,8 @@ class MyAI( AI ):
 		if (len(numUnmrked) == num):
 			for i in numUnmrked:
 				self.__board[i[0]][i[1]] = 10
+				if ((i[0], i[1]) not in self.__bomblist):
+					self.__bomblist.append((i[0], i[1]))
 				self.checkUpdatedBomb(i[0], i[1])
 
 
@@ -252,34 +276,34 @@ class MyAI( AI ):
 				if (tile[0] > 0):
 					# Check top left
 					if (y > 0):
-						if self.__board[tile[0] - 1][tile[1] - 1] == -1:
+						if self.__board[tile[0] - 1][tile[1] - 1] == -1 and (tile[0] - 1, tile[1] - 1) not in self.__toUncover:
 							self.__toUncover.append((tile[0] - 1, tile[1] - 1))
 					# Check top right
 					if (y < self.__colDimension - 1):
-						if self.__board[tile[0] - 1][tile[1] + 1] == -1:
+						if self.__board[tile[0] - 1][tile[1] + 1] == -1 and (tile[0] - 1, tile[1] + 1) not in self.__toUncover:
 							self.__toUncover.append((tile[0] - 1, tile[1] + 1))
 					# Check top mid
-					if self.__board[tile[0] - 1][tile[1]] == -1:
+					if self.__board[tile[0] - 1][tile[1]] == -1 and (tile[0] - 1, tile[1]) not in self.__toUncover:
 						self.__toUncover.append((tile[0] - 1, tile[1]))
 				# Check mid left
 				if (tile[1] > 0):
-					if self.__board[tile[0]][tile[1] - 1] == -1:
+					if self.__board[tile[0]][tile[1] - 1] == -1 and (tile[0], tile[1] - 1) not in self.__toUncover:
 						self.__toUncover.append((tile[0], tile[1] - 1))
 				# Chcek mid right
 				if (y < self.__colDimension - 1):
-					if self.__board[tile[0]][tile[1] - 1] == -1:
+					if self.__board[tile[0]][tile[1] + 1] == -1 and (tile[0], tile[1] + 1) not in self.__toUncover:
 						self.__toUncover.append((tile[0], tile[1] + 1))
 				# Check bottom row
 				if (tile[0] < self.__rowDimension - 1):
 					if (tile[1] > 0):
-						if self.__board[tile[0] + 1][tile[1] - 1] == -1:
+						if self.__board[tile[0] + 1][tile[1] - 1] == -1 and (tile[0] + 1, tile[1] - 1) not in self.__toUncover:
 							self.__toUncover.append((tile[0] + 1, tile[1] - 1))
 					# Check bottom right
 					if (tile[1] < self.__colDimension - 1):
-						if self.__board[tile[0] + 1][tile[1] + 1] == -1:
+						if self.__board[tile[0] + 1][tile[1] + 1] == -1 and (tile[0] + 1, tile[1] + 1) not in self.__toUncover:
 							self.__toUncover.append((tile[0] + 1, tile[1] + 1))
 					# Check bottom mid
-					if self.__board[tile[0] + 1][tile[1]] == -1:
+					if self.__board[tile[0] + 1][tile[1]] == -1 and (tile[0] + 1, tile[1]) not in self.__toUncover:
 						self.__toUncover.append((tile[0] + 1, tile[1]))
 
 
@@ -291,28 +315,28 @@ class MyAI( AI ):
 		# check all 8 adjacent tiles if they are alre ady uncovered; if not add them to toUncover list
 		
 		# little messy if u can double check that ll be nice
-
+			# changed insert of append to maintain order of tiles being checked
 		if (x-1 >= 0):
-			if (y-1 >= 0 and ((x-1,y-1) not in self.__Uncovered)):
-				self.__toUncover.insert(0, (x-1,y-1))
-			if (y+1 < len(self.__board[x]) and ((x-1,y+1) not in self.__Uncovered)):
-				self.__toUncover.insert(0,(x-1,y+1))
-			if ((x-1,y) not in self.__Uncovered):
-				self.__toUncover.insert(0, (x-1,y))
+			if (y-1 >= 0 and ((x-1, y-1) not in self.__Uncovered)) and ((x-1, y-1) not in self.__toUncover):
+				self.__toUncover.append((x-1, y-1))
+			if (y+1 < len(self.__board[x]) and ((x-1, y+1) not in self.__Uncovered)) and ((x-1, y+1) not in self.__toUncover):
+				self.__toUncover.append((x-1, y+1))
+			if ((x-1, y) not in self.__Uncovered) and ((x-1, y) not in self.__toUncover):
+				self.__toUncover.append((x-1, y))
 
 		if (x+1 < len(self.__board)):
-			if (y-1 >= 0 and ((x+1,y-1) not in self.__Uncovered)):
-				self.__toUncover.insert(0, (x+1,y-1))
-			if (y+1 < len(self.__board[x]) and ((x+1,y+1) not in self.__Uncovered)):
-				self.__toUncover.insert(0, (x+1,y+1))
-			if ((x+1,y) not in self.__Uncovered):
-				self.__toUncover.insert(0, (x+1,y))
+			if (y-1 >= 0 and ((x+1,y-1) not in self.__Uncovered)) and ((x+1,y-1) not in self.__toUncover):
+				self.__toUncover.append((x+1,y-1))
+			if (y+1 < len(self.__board[x]) and ((x+1,y+1) not in self.__Uncovered) and ((x+1,y+1) not in self.__toUncover)):
+				self.__toUncover.append((x+1,y+1))
+			if ((x+1,y) not in self.__Uncovered and (x+1,y) not in self.__toUncover):
+				self.__toUncover.append((x+1,y))
 
-		if (y-1 >= 0 and ((x,y-1) not in self.__Uncovered)):
-			self.__toUncover.insert(0, (x,y-1))
+		if (y-1 >= 0 and ((x,y-1) not in self.__Uncovered)) and ((x,y-1) not in self.__toUncover):
+			self.__toUncover.append((x,y-1))
 
-		if (y+1 < len(self.__board[x]) and ((x,y+1) not in self.__Uncovered)):
-			self.__toUncover.insert(0, (x,y+1))
+		if (y+1 < len(self.__board[x]) and ((x,y+1) not in self.__Uncovered) and ((x,y+1) not in self.__toUncover)):
+			self.__toUncover.append((x,y+1))
 
 			
 	def checkAdjTiles(self, x, y):
@@ -341,16 +365,16 @@ class MyAI( AI ):
 
 	def uncoverTile(self, num: int):
 		#if ((self.__currX, self.__currY) in self.__toUncover):
-		self.__board[self.__currX][self.__currY] = num
-		self.__Uncovered.append((self.__currX, self.__currY))
 		if ((self.__currX, self.__currY) not in self.__Uncovered):
+			self.__board[self.__currX][self.__currY] = num
+			self.__Uncovered.append((self.__currX, self.__currY))
 			self.__coveredTiles -= 1
 			#self.__toUncover.pop(0)
 
 	# use 9 as flag for now
 	def flagTile(self):
 		self.__board[self.__currX][self.__currY] = 9
-
+		# TODO: After marking a bomb, check surrounding tiles if updated info changes anything
 
 	def create_board(self):
 		for i in range(self.__rowDimension):
@@ -360,10 +384,28 @@ class MyAI( AI ):
 				row.append(-1)
 			self.__board.append(row)
 
-	
+		
 	def flagBombs(self):
 		for i in range(self.__rowDimension):
 			for j in range(self.__colDimension):
 				if self.__board[i][j] == 9 or self.__board[i][j] == 10:
 					self.__bomblist.append((i,j))
 					
+	
+	def printBoard(self):
+		for i in range(self.__rowDimension):
+			for j in range(self.__colDimension):
+				print(self.__board[i][j], " ", end="")
+			print("\n")
+
+
+# NOTES:
+	# Bombs not being properly set, possibly switching positions with safe tiles
+		# Need to check how bombs are being marked (possibly fixed)
+	# I think redundant bombs being added to bomblist
+		# Need to check when bombs are being found (set to 10) and also when being added to bomblist
+
+
+	# Need to check how moves are added, negative move was added
+		# Out of bounds are still being made
+	# Bombs might be being added to toUncover after toUncover is empty
