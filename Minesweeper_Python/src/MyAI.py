@@ -90,7 +90,7 @@ class MyAI( AI ):
 
 		print ("Len of bomList:", len(self.__bomblist))		# DELETE AFTER
 		print("Len of self.__toUncover before: ", len(self.__toUncover))	# DELETE AFTER
-		
+		print("(x, y):", self.__currX, self.__currY)
 
 		# uncover the tile and set the status 0-8 else flagtheTile
 			# When would it return a value that isn't 0-8?
@@ -121,8 +121,10 @@ class MyAI( AI ):
 			while (found == 0):
 				rand_x = random.randint(0, self.__rowDimension)
 				rand_y = random.randint(0, self.__colDimension)
-				if ((rand_x, rand_y) not in self.__Uncovered and (rand_x, rand_y) not in self.__bomblist):
+				if (self.__board[rand_x][rand_y] == -1 and (rand_x, rand_y) not in self.__bomblist):	
 					# Change to not be adjacent to an uncovered edge
+					for thing in self.__Uncovered:
+						print(thing)
 					found = 1
 			action = AI.Action(1) #uncover
 			self.__lastAction = Action(action, rand_x, rand_y)
@@ -373,7 +375,7 @@ class MyAI( AI ):
 
 	# use 9 as flag for now
 	def flagTile(self):
-		self.__board[self.__currX][self.__currY] = 9
+		self.__board[self.__currX][self.__currY] = 10
 		# TODO: After marking a bomb, check surrounding tiles if updated info changes anything
 
 	def create_board(self):
