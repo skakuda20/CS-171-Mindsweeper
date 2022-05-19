@@ -69,7 +69,7 @@ class MyAI( AI ):
 
 		# are we done? #CoveredTiles = #Mines ->LEAVES
 		if (self.__coveredTiles == self.__totalMines):
-			#self.flagBombs()
+			self.flagBombs()
 			while (len(self.__bomblist) > 0):
 				action = AI.Action(2) #flag
 				lastAction = Action(action, self.__bomblist[0][0], self.__bomblist[0][1])
@@ -258,7 +258,7 @@ class MyAI( AI ):
 					numBombs += 1
 			# Chcek mid right
 			if (tile[1] < self.__colDimension - 1):
-				if self.__board[tile[0]][tile[1] - 1] == 10:
+				if self.__board[tile[0]][tile[1] + 1] == 10:
 					numBombs += 1
 			# Check bottom row
 			if (tile[0] < self.__rowDimension - 1):
@@ -390,8 +390,9 @@ class MyAI( AI ):
 	def flagBombs(self):
 		for i in range(self.__rowDimension):
 			for j in range(self.__colDimension):
-				if self.__board[i][j] == 9 or self.__board[i][j] == 10:
-					self.__bomblist.append((i,j))
+				if (self.__board[i][j] == -1 or self.__board[i][j] == 10):
+					if ((i,j) not in self.__bomblist):
+						self.__bomblist.append((i,j))
 					
 	
 	def printBoard(self):
