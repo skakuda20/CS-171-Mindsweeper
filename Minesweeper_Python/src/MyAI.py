@@ -41,6 +41,7 @@ class MyAI( AI ):
 		# tiles that are aleady uncovered
 		self.__Uncovered = []
 		self.__bomblist = []
+		self.__numFlaged = 0
 		#have a copy of the board to update the board status on our end
 		self.__board = []
 		self.create_board()
@@ -67,15 +68,7 @@ class MyAI( AI ):
 			return Action(action, x, y)
 
 
-		# are we done? #CoveredTiles = #Mines ->LEAVES
-		if (self.__coveredTiles == self.__totalMines):
-			self.flagBombs()
-			while (len(self.__bomblist) > 0):
-				action = AI.Action(2) #flag
-				lastAction = Action(action, self.__bomblist[0][0], self.__bomblist[0][1])
-				self.__bomblist.pop(0)
-				return lastAction
-			return Action(AI.Action.LEAVE)
+		
 		# otherwise need figure out UNCOVER X,Y
 		""" E.g. if EffectiveLabel(x) = NumUnMarkedNeighbors(x), then 
 		all UnMarkedNeighbors(x) must be mines (mark them as 
@@ -99,6 +92,18 @@ class MyAI( AI ):
 		else:
 			self.flagTile()
 
+		# are we done? #CoveredTiles = #Mines ->LEAVES
+		if (self.__coveredTiles == self.__totalMines):
+			self.flagBombs()
+			while (self.__numFlaged < self.__totalMines):
+				action = AI.Action(2) #flag
+				lastAction = Action(action, self.__bomblist[0][0], self.__bomblist[0][1])
+				self.__bomblist.pop(0)
+				self.__numFlaged += 1
+				print("len of bomblist inside loop:", self.__bomblist)
+				return lastAction
+			return Action(AI.Action.LEAVE)
+
 		#simple rule of thumb logic UNCOVER X,Y
 		if (number == 0):
 			self.uncoverAdjTiles()
@@ -118,14 +123,72 @@ class MyAI( AI ):
 			# IF no certain moves left, randomly pick and uncovered tile not adjacent to any edges(techncially higher prob of being safe than adj tiles)
 			print("RAN OUT OF MOVES SO NOW RANDOM")
 			found = 0
+			tried_moves = []
 			while (found == 0):
-				rand_x = random.randint(0, self.__rowDimension)
-				rand_y = random.randint(0, self.__colDimension)
+				rand_x = random.randint(0, self.__rowDimension-1)
+				rand_y = random.randint(0, self.__colDimension-1)
+				print("coord", rand_x, rand_y)
 				if (self.__board[rand_x][rand_y] == -1 and (rand_x, rand_y) not in self.__bomblist):	
+					# Check if number of non-adj empty tiles is 0
+					print("checking random tile")
+					counter = 0
+					if (rand_x-1 >= 0):
+						if (rand_y-1 >= 0 and self.__board[rand_x-1][rand_y-1] != -1):
+							print(1)
+							self.checkNumUnMarked(rand_x-1, rand_y-1, self.__board[rand_x-1][rand_y-1])
+							counter += 1
+						if (rand_y+1 < len(self.__board[rand_x]) and self.__board[rand_x-1][rand_y+1] != -1):
+							print(2)
+							self.checkNumUnMarked(rand_x-1, rand_y+1, self.__board[rand_x-1][rand_y+1])
+							counter += 1
+						if (self.__board[rand_x-1][rand_y] != -1):
+							counter += 1
+							self.checkNumUnMarked(rand_x-1, rand_y, self.__board[rand_x-1][rand_y])
+							print(3)
+
+					if (rand_x+1 < len(self.__board)):
+						if (rand_y-1 >= 0 and self.__board[rand_x+1][rand_y-1] != -1):
+							counter += 1
+							self.checkNumUnMarked(rand_x+1, rand_y-1, self.__board[rand_x+1][rand_y-1])
+							print(4)
+						if (rand_y+1 < len(self.__board[rand_x]) and self.__board[rand_x+1][rand_y+1] != -1):
+							counter += 1
+							self.checkNumUnMarked(rand_x+1, rand_y+1, self.__board[rand_x+1][rand_y+1])
+							print(5)
+						if (self.__board[rand_x+1][rand_y] != -1):
+							counter += 1
+							self.checkNumUnMarked(rand_x+1, rand_y, self.__board[rand_x+1][rand_y])
+							print(6)
+
+					if (rand_y-1 >= 0 and 0 < self.__board[rand_x][rand_y-1] != -1):
+						counter += 1
+						self.checkNumUnMarked(rand_x, rand_y-1, self.__board[rand_x][rand_y-1])
+						print(7)
+
+					if (rand_y+1 < len(self.__board[rand_x]) and self.__board[rand_x][rand_y+1] != -1):
+						counter += 1
+						self.checkNumUnMarked(rand_x, rand_y+1, self.__board[rand_x][rand_y+1])
+						print(8)
 					# Change to not be adjacent to an uncovered edge
-					for thing in self.__Uncovered:
-						print(thing)
-					found = 1
+					
+					tried_moves.append((rand_x, rand_y))
+					
+					print("counter count", counter)
+					#for thing in self.__Uncovered:
+						#print(thing)
+					if (counter == 0):
+						print("loop should quit")
+						found = 1
+					else:
+						if (len(tried_moves) == self.__coveredTiles - len(self.__bomblist)):
+							# pick random move from list of tried moves
+							print("HIT LOGICAL GUESS")
+							rand_x = tried_moves[0][0]
+							rand_y = tried_moves[0][1]
+							found = 1
+
+
+
 			action = AI.Action(1) #uncover
 			self.__lastAction = Action(action, rand_x, rand_y)
 			self.__currX = rand_x
@@ -398,7 +461,7 @@ class MyAI( AI ):
 	def printBoard(self):
 		for i in range(self.__rowDimension):
 			for j in range(self.__colDimension):
-				print(self.__board[i][j], " ", end="")
+				print(self.__board[j][self.__rowDimension - i - 1], " ", end="")
 			print("\n")
 
 
@@ -409,6 +472,6 @@ class MyAI( AI ):
 		# Need to check when bombs are being found (set to 10) and also when being added to bomblist
 
 
-	# Need to check how moves are added, negative move was added
-		# Out of bounds are still being made
-	# Bombs might be being added to toUncover after toUncover is empty
+
+	# Make fuction to set remaining tiles to all bombs if number of covered = num bombs
+
