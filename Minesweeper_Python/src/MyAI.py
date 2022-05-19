@@ -390,7 +390,7 @@ class MyAI( AI ):
 	def flagBombs(self):
 		for i in range(self.__rowDimension):
 			for j in range(self.__colDimension):
-				if (self.__board[i][j] == -1 or self.__board[i][j] == 10):
+				if (self.__board[i][j] == -1 or self.__board[i][j] == 9 or self.__board[i][j] == 10):
 					if ((i,j) not in self.__bomblist):
 						self.__bomblist.append((i,j))
 					
