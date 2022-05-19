@@ -242,11 +242,11 @@ class MyAI( AI ):
 			# Check top row
 			if (tile[0] > 0):
 				# Check top left
-				if (y > 0):
+				if (tile[1] > 0):
 					if self.__board[tile[0] - 1][tile[1] - 1] == 10:
 						numBombs += 1
 				# Check top right
-				if (y < self.__colDimension - 1):
+				if (tile[1] < self.__colDimension - 1):
 					if self.__board[tile[0] - 1][tile[1] + 1] == 10:
 						numBombs += 1
 				# Check top mid
@@ -257,7 +257,7 @@ class MyAI( AI ):
 				if self.__board[tile[0]][tile[1] - 1] == 10:
 					numBombs += 1
 			# Chcek mid right
-			if (y < self.__colDimension - 1):
+			if (tile[1] < self.__colDimension - 1):
 				if self.__board[tile[0]][tile[1] - 1] == 10:
 					numBombs += 1
 			# Check bottom row
@@ -277,11 +277,11 @@ class MyAI( AI ):
 			if numBombs == self.__board[tile[0]][tile[1]]:
 				if (tile[0] > 0):
 					# Check top left
-					if (y > 0):
+					if (tile[1] > 0):
 						if self.__board[tile[0] - 1][tile[1] - 1] == -1 and (tile[0] - 1, tile[1] - 1) not in self.__toUncover:
 							self.__toUncover.append((tile[0] - 1, tile[1] - 1))
 					# Check top right
-					if (y < self.__colDimension - 1):
+					if (tile[1] < self.__colDimension - 1):
 						if self.__board[tile[0] - 1][tile[1] + 1] == -1 and (tile[0] - 1, tile[1] + 1) not in self.__toUncover:
 							self.__toUncover.append((tile[0] - 1, tile[1] + 1))
 					# Check top mid
@@ -292,7 +292,7 @@ class MyAI( AI ):
 					if self.__board[tile[0]][tile[1] - 1] == -1 and (tile[0], tile[1] - 1) not in self.__toUncover:
 						self.__toUncover.append((tile[0], tile[1] - 1))
 				# Chcek mid right
-				if (y < self.__colDimension - 1):
+				if (tile[1] < self.__colDimension - 1):
 					if self.__board[tile[0]][tile[1] + 1] == -1 and (tile[0], tile[1] + 1) not in self.__toUncover:
 						self.__toUncover.append((tile[0], tile[1] + 1))
 				# Check bottom row
